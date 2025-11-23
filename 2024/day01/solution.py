@@ -23,6 +23,16 @@ def split_and_sort_location_id_lists(location_ids: list[tuple]) -> list[list]:
     ]
 
 
+def calculate_counts_in_id_list(id_list: list[int]) -> dict:
+    counts = {}
+    for id in id_list:
+        if id in counts.keys():
+            counts[id] += 1
+        else:
+            counts[id] = 1
+    return counts
+
+
 def calculate_ids_difference_sum(location_ids: list[list]) -> int:
     """Loops through location ID lists and returns sum of absolute
     differences between the same index in each list"""
@@ -33,6 +43,15 @@ def calculate_ids_difference_sum(location_ids: list[list]) -> int:
         final_difference_value += absolute_diff
     logger.info("Returning a final value after %s iterations", len(location_ids[0]))
     return final_difference_value
+
+
+def calculate_list_similarity_score(list_a: list, list_b: dict) -> int:
+    logger.info("Calculating list similarity score")
+    similarity_score = 0
+    for id in list_a:
+        if id in list_b.keys():
+            similarity_score += id * list_b[id]
+    return similarity_score
 
 
 def main():
@@ -48,6 +67,11 @@ def main():
     logger.info(
         "Part 1, the total distance between the lists: %s", part1_solution_value
     )
+    counts_dictionary = calculate_counts_in_id_list(sorted_location_ids[1])
+    part2_solution_value = calculate_list_similarity_score(
+        set(sorted_location_ids[0]), counts_dictionary
+    )
+    logger.info("Part 2, the similarity score: %s", part2_solution_value)
 
 
 if __name__ == "__main__":
