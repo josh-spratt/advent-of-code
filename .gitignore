@@ -217,3 +217,5 @@ __marimo__/
 
 # Advent of Code
 input.txt
+
+.DS_Store
