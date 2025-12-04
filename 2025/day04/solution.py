@@ -15,7 +15,12 @@ def count_neighboring_paper_rolls(grid: list[list[str]], row: int, column: int) 
     number_of_columns = len(grid[0])
     for row_movement, column_movement in directions:
         neighbor_row, neighbor_column = row + row_movement, column + column_movement
-        if neighbor_row >= 0 and neighbor_row < number_of_rows and neighbor_column >= 0 and neighbor_column < number_of_columns:
+        if (
+            neighbor_row >= 0
+            and neighbor_row < number_of_rows
+            and neighbor_column >= 0
+            and neighbor_column < number_of_columns
+        ):
             neighbor_value = grid[neighbor_row][neighbor_column]
             if neighbor_value == "@":
                 neighboring_rolls += 1
@@ -38,7 +43,7 @@ def part1_find_all_accessible_rolls(grid: list[list[str]]) -> int:
 
 def part2_recursively_remove_accessible_rolls(grid: list[list[str]]) -> int:
     to_remove = []
-    
+
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             if grid[i][j] != "@":
@@ -46,13 +51,13 @@ def part2_recursively_remove_accessible_rolls(grid: list[list[str]]) -> int:
             neighboring_rolls = count_neighboring_paper_rolls(grid, i, j)
             if neighboring_rolls <= 3:
                 to_remove.append((i, j))
-    
+
     if not to_remove:
         return 0
-    
+
     for i, j in to_remove:
         grid[i][j] = "."
-    
+
     return len(to_remove) + part2_recursively_remove_accessible_rolls(grid)
 
 
