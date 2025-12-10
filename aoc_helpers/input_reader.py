@@ -15,3 +15,10 @@ class AocInputReader:
         logger.info("Read %d bytes from %s", len(raw), self.file_path)
         data = raw.decode("utf-8").strip()
         return data
+
+    def read_input_to_lines(self):
+        """Reads and returns the input file as a list of lines"""
+        input_text = self.read_input_to_str()
+        lines = input_text.splitlines()
+        logger.info("Split input into %d lines", len(lines))
+        return lines
